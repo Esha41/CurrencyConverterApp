@@ -43,3 +43,14 @@ CurrencyConverterApp is a .NET 8 Web API for fetching currency exchange rates, c
 
 ```bash
 git clone <https://github.com/Esha41/CurrencyConverterApp.git>
+
+
+### **3. Restore Dependencies**
+dotnet restore
+
+
+### **2. Run the Application**
+dotnet run --project CurrencyConverterApp
+
+The API will be available at:
+https://localhost:5001/api/v1/currencyconverter/
