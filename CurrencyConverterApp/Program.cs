@@ -54,7 +54,6 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ReportApiVersions = true;
-    options.ApiVersionReader = new Microsoft.AspNetCore.Mvc.Versioning.UrlSegmentApiVersionReader();
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -109,7 +108,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
     };
 });
-
+builder.Services.AddAuthorization();
 //Configure rate limiting, 10 requests per minute for each client
 builder.Services.AddRateLimiter(options =>
 {
@@ -182,3 +181,5 @@ static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
             }
         );
 }
+
+public partial class Program { }
