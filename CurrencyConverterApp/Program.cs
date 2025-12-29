@@ -1,5 +1,5 @@
+using CurrencyConverterApp.Authentication;
 using CurrencyConverterApp.Middlewares;
-using CurrencyConverterApp.Models;
 using CurrencyConverterApp.Services.Implementation;
 using CurrencyConverterApp.Services.Implementations;
 using CurrencyConverterApp.Services.Interfaces;

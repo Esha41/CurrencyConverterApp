@@ -68,8 +68,8 @@ Open Swagger UI in your browser:
 | User  | user     | user123   | Currency conversion only |
 
 
-Note: User can only access currencyConversion endpoint. Admin can access all endpoints
-Note: API versioning is implemented. Use Version '1' in order to run the existing APIs
+- Note: User can only access currencyConversion endpoint. Admin can access all endpoints
+- Note: API versioning is implemented. Use Version '1' in order to run the existing APIs
 
 
 ## **Assumptions**
@@ -79,8 +79,6 @@ Note: API versioning is implemented. Use Version '1' in order to run the existin
 - Roles (Admin/User) are hardcoded in appsetting.json file for demonstration; in production, roles would be managed via a database or identity provider.
 
 - Caching is in-memory (MemoryCache) and will reset when the application restarts. Ideally redisCache should be used.
-
-- Historical exchange rates assume pagination, with default page size and page number applied if not provided.
 
 - Rate-limiting (throttling) is applied per IP address to prevent abuse; more advanced limits per client can be added later.
 

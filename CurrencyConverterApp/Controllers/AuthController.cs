@@ -1,5 +1,5 @@
-﻿using CurrencyConverterApp.Models;
-using CurrencyConverterApp.Services.Implementation;
+﻿using CurrencyConverterApp.Authentication;
+using CurrencyConverterApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

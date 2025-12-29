@@ -1,4 +1,4 @@
-﻿namespace CurrencyConverterApp.Models
+﻿namespace CurrencyConverterApp.Authentication
 {
     public class JwtSettings
     {

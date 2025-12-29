@@ -1,13 +1,12 @@
 ﻿using CurrencyConverterApp.Models;
-using CurrencyConverterApp.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace CurrencyConverterApp.Services.Implementation
+namespace CurrencyConverterApp.Authentication
 {
-    public class TokenService : ITokenService
+    public class TokenService
     {
         private readonly IConfiguration _configuration;
         private readonly List<LoginModel> _users;
@@ -36,7 +35,7 @@ namespace CurrencyConverterApp.Services.Implementation
                 issuer: jwtSettings?.Issuer,
                 audience: jwtSettings?.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(jwtSettings.TokenValidityInMinutes), 
+                expires: DateTime.Now.AddMinutes(jwtSettings.TokenValidityInMinutes),
                 signingCredentials: creds
             );
 
