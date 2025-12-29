@@ -1,4 +1,5 @@
 using CurrencyConverterApp.Authentication;
+using CurrencyConverterApp.Configurations;
 using CurrencyConverterApp.Middlewares;
 using CurrencyConverterApp.Services.Implementation;
 using CurrencyConverterApp.Services.Implementations;
@@ -6,6 +7,8 @@ using CurrencyConverterApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Polly;
 using Polly.Extensions.Http;
 using Serilog;
@@ -125,6 +128,34 @@ builder.Services.AddRateLimiter(options =>
                 QueueLimit = 0
             }));
 });
+
+// configure  distributed tracing (OpenTelemetry).
+var otelOptions = builder.Configuration
+    .GetSection(OpenTelemetryOptions.SectionName)
+    .Get<OpenTelemetryOptions>();
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder =>
+    {
+        tracerProviderBuilder
+            .SetResourceBuilder(ResourceBuilder.CreateDefault()
+            .AddService(otelOptions!.ServiceName))
+            .AddAspNetCoreInstrumentation() 
+            .AddHttpClientInstrumentation(); 
+
+        if (otelOptions.EnableConsoleExporter)
+            tracerProviderBuilder.AddConsoleExporter();
+
+        if (otelOptions.EnableJaegerExporter)
+        {
+            tracerProviderBuilder.AddJaegerExporter(jaegerOptions =>
+            {
+                jaegerOptions.AgentHost = otelOptions.JaegerHost;
+                jaegerOptions.AgentPort = otelOptions.JaegerPort;
+            });
+        }
+    });
+
 
 var app = builder.Build();
 

@@ -82,9 +82,9 @@ Open Swagger UI in your browser:
 
 - Rate-limiting (throttling) is applied per IP address to prevent abuse; more advanced limits per client can be added later.
 
-- Logging uses Serilog and local file logging; centralized logging (Seq, ELK) is not yet configured.
+- Logging uses Serilog and local file logging. logs can be seen in the Logs folder which exists in the same project folder
 
-- logs can be seen in the Logs folder which exists in the same project folder
+- Distributed tracing has been implemented using OpenTelemetry. It is assumed that either the console exporter or a tracing backend (e.g., Jaeger) is available for monitoring request flows and correlating API calls.
 
 - API versioning is currently v1, but the structure supports future versions.
 
