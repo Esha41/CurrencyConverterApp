@@ -61,10 +61,11 @@ Open Swagger UI in your browser:
 - Use the Authorize button in Swagger to log in and test the APIs.
 - Login with one of the predefined users:
 
-Role    |	Username   |	Password	  |	  Accessible Endpoints
------------------------------------------------------------------------------------------------
-Admin	|   admin	   |	admin123	  |	  All endpoints (latest, historical, conversion)
-User	|   user	   |	user123	      |	  Currency conversion only
+
+| Role  | Username | Password  | Accessible Endpoints |
+|-------|----------|-----------|--------------------|
+| Admin | admin    | admin123  | All endpoints (latest exchange rates, historical rates, currency conversion) |
+| User  | user     | user123   | Currency conversion only |
 
 
 Note: User can only access currencyConversion endpoint. Admin can access all endpoints
