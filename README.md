@@ -41,5 +41,63 @@ CurrencyConverterApp is a .NET 8 Web API for fetching currency exchange rates, c
 
 ### **2. Clone the Repository**
 
-```bash
 git clone <https://github.com/Esha41/CurrencyConverterApp.git>
+
+
+### **4. Restore Dependencies**
+
+dotnet restore
+
+### **5. Run the Application**
+
+The API will be available at:
+https://localhost:5001/api/v1/currencyconverter/
+
+
+### **6. Run the Application**
+
+Open Swagger UI in your browser:
+
+- Use the Authorize button in Swagger to log in and test the APIs.
+- Login with one of the predefined users:
+
+Role    |	Username   |	Password	  |	  Accessible Endpoints
+-----------------------------------------------------------------------------------------------
+Admin	|   admin	   |	admin123	  |	  All endpoints (latest, historical, conversion)
+User	|   user	   |	user123	      |	  Currency conversion only
+
+
+Note: User can only access currencyConversion endpoint. Admin can access all endpoints
+
+
+
+## **Assumptions**
+
+- The API currently supports only the Frankfurter exchange rate provider, but the architecture allows adding more providers in the future via the factory pattern.
+
+- Roles (Admin/User) are hardcoded in appsetting.json file for demonstration; in production, roles would be managed via a database or identity provider.
+
+- Caching is in-memory (MemoryCache) and will reset when the application restarts. Ideally redisCache should be used.
+
+- Historical exchange rates assume pagination, with default page size and page number applied if not provided.
+
+- Rate-limiting (throttling) is applied per IP address to prevent abuse; more advanced limits per client can be added later.
+
+- Logging uses Serilog and local file logging; centralized logging (Seq, ELK) is not yet configured.
+
+- API versioning is currently v1, but the structure supports future versions.
+
+
+
+
+## **Possible Future Enhancements**
+
+- Add additional providers dynamically and allow user selection at runtime.
+
+- Use Redis or similar to maintain cache across multiple instances for horizontal scaling.
+
+- Make the API container-ready and deployable for horizontal scaling.
+
+- Add real-time alerts or push notifications for significant currency rate changes
+
+- Provide more advanced historical queries, including charts and trend analysis.
