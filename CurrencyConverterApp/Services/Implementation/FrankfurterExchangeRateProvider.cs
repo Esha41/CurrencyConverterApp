@@ -23,17 +23,17 @@ namespace CurrencyConverterApp.Services.Implementations
             var client = _httpClientFactory.CreateClient("FrankFurterApi");
             var url = $"latest?base={baseCurrency}";
 
-            //calling frankfurter API and logging
+            //log the corelationID and outgoing request to frankfurter API
             var correlationId = _httpContextAccessor.HttpContext?.Items["CorrelationId"]?.ToString();
             client.DefaultRequestHeaders.Remove("X-Correlation-Id");
             client.DefaultRequestHeaders.Add("X-Correlation-Id", correlationId);
-
             _logger.LogInformation("Calling Frankfurter API | CorrelationId: {CorrelationId} | URL: {Url}", correlationId, url);
 
             var response = await client.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonSerializer.Deserialize<ExchangeRateResponse>(content, JsonOptions)!;
 
+            //log the corelationID and incoming response to frankfurter API
             _logger.LogInformation(
             "Frankfurter API response | CorrelationId: {CorrelationId} | StatusCode: {StatusCode}",
             correlationId,
@@ -47,11 +47,10 @@ namespace CurrencyConverterApp.Services.Implementations
             var url = $"{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?base={baseCurrency}";
             var client = _httpClientFactory.CreateClient("FrankFurterApi");
 
-            //calling frankfurter API and logging
+            //log the corelationID and outgoing request to frankfurter API
             var correlationId = _httpContextAccessor.HttpContext?.Items["CorrelationId"]?.ToString();
             client.DefaultRequestHeaders.Remove("X-Correlation-Id");
             client.DefaultRequestHeaders.Add("X-Correlation-Id", correlationId);
-
             _logger.LogInformation("Calling Frankfurter API | CorrelationId: {CorrelationId} | URL: {Url}", 
              correlationId, 
              url);
@@ -60,6 +59,7 @@ namespace CurrencyConverterApp.Services.Implementations
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonSerializer.Deserialize<HistoricalRatesResponse>(content, JsonOptions)!;
 
+            //log the corelationID and incoming response to frankfurter API
             _logger.LogInformation(
             "Frankfurter API response | CorrelationId: {CorrelationId} | StatusCode: {StatusCode}",
             correlationId,
@@ -73,11 +73,10 @@ namespace CurrencyConverterApp.Services.Implementations
             var client = _httpClientFactory.CreateClient("FrankFurterApi");
             var url = $"latest?base={from}&symbols={to}";
 
-            //calling frankfurter API and logging
+            //log the corelationID and outgoing request to frankfurter API
             var correlationId = _httpContextAccessor.HttpContext?.Items["CorrelationId"]?.ToString();
             client.DefaultRequestHeaders.Remove("X-Correlation-Id");
             client.DefaultRequestHeaders.Add("X-Correlation-Id", correlationId);
-
             _logger.LogInformation("Calling Frankfurter API | CorrelationId: {CorrelationId} | URL: {Url}",
              correlationId,
              url);
@@ -86,6 +85,7 @@ namespace CurrencyConverterApp.Services.Implementations
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonSerializer.Deserialize<ExchangeRateResponse>(content, JsonOptions)!;
 
+            //log the corelationID and incoming response to frankfurter API
             _logger.LogInformation(
             "Frankfurter API response | CorrelationId: {CorrelationId} | StatusCode: {StatusCode}",
             correlationId,

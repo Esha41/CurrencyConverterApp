@@ -4,7 +4,6 @@ using CurrencyConverterApp.Services.Implementation;
 using CurrencyConverterApp.Services.Implementations;
 using CurrencyConverterApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Polly;
@@ -15,7 +14,7 @@ using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//configure serilog and logs will be printed in file
+//configure serilog , structured logging and logs will be printed in file
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()

@@ -69,7 +69,7 @@ Open Swagger UI in your browser:
 
 
 Note: User can only access currencyConversion endpoint. Admin can access all endpoints
-
+Note: API versioning is implemented. Use Version '1' in order to run the existing APIs
 
 
 ## **Assumptions**
@@ -86,6 +86,8 @@ Note: User can only access currencyConversion endpoint. Admin can access all end
 
 - Logging uses Serilog and local file logging; centralized logging (Seq, ELK) is not yet configured.
 
+- logs can be seen in the Logs folder which exists in the same project folder
+
 - API versioning is currently v1, but the structure supports future versions.
 
 
@@ -94,6 +96,8 @@ Note: User can only access currencyConversion endpoint. Admin can access all end
 ## **Possible Future Enhancements**
 
 - Add additional providers dynamically and allow user selection at runtime.
+
+- Enhanced the API app further and use API versioning as configured in project
 
 - Use Redis or similar to maintain cache across multiple instances for horizontal scaling.
 

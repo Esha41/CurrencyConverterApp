@@ -25,6 +25,7 @@ namespace CurrencyConverterApp.Middlewares
             context.Items["CorrelationId"] = correlationId;
             context.Response.Headers["X-Correlation-Id"] = correlationId;
 
+            //log details for each API requests
             var clientIp = context.Connection.RemoteIpAddress?.ToString();
             var clientId = context.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Anonymous";
             var httpMethod = context.Request.Method;

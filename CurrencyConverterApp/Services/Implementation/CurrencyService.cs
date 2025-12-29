@@ -19,12 +19,14 @@ namespace CurrencyConverterApp.Services.Implementations
 
         public async Task<ExchangeRateResponse> GetLatestExchangeRates(string providerName, string baseCurrency)
         {
+            //generate cache key and get latest exchange rates from cache if exists
             string cacheKey = $"LatestRates_{baseCurrency}_{providerName}";
             if (_cache.TryGetValue(cacheKey, out ExchangeRateResponse? cachedLatestRates) && cachedLatestRates != null)
                 return cachedLatestRates;
 
             try
             {
+                //get provider name to select the class using factory pattern
                 var provider = _exchangeRateProviderfactory.GetProvider(providerName);
                 var response = await provider.GetLatestExchangeRates(baseCurrency);
 
@@ -50,14 +52,16 @@ namespace CurrencyConverterApp.Services.Implementations
         {
             try
             {
+                //Exclude TRY, PLN, THB, and MXN from the response 
                 if (BlockedCurrencies.Contains(from) || BlockedCurrencies.Contains(to))
                     throw new InvalidOperationException("Currency not supported.");
 
+                //generate cache key and get converted currency rates from cache if exists
                 string cacheKey = $"ConvertCurrency_{from}_{to}_{amount}_{providerName}";
-
                 if (_cache.TryGetValue(cacheKey, out CurrencyConversionResponse? cachedConversion) && cachedConversion != null)
                     return cachedConversion;
 
+                //get provider name to select the class using factory pattern
                 var provider = _exchangeRateProviderfactory.GetProvider(providerName);
                 var ratesResponse = await provider.ConvertCurrency(from, to);
                 var rate = ratesResponse.Rates[to];
@@ -72,6 +76,7 @@ namespace CurrencyConverterApp.Services.Implementations
                     ConvertedAmount = convertedAmount
                 };
 
+                //cache the result
                 var cacheOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = _cacheDuration
@@ -88,13 +93,14 @@ namespace CurrencyConverterApp.Services.Implementations
 
         public async Task<HistoricalRatesResponse> GetHistoricalExchangeRates(string providerName, string baseCurrency, DateTime startDate, DateTime endDate, int pageNum, int pageSize)
         {
+            //generate cache key and get historical exchange rates from cache if exists
             string cacheKey = $"HistoricalRates_{baseCurrency}_{startDate:yyyyMMdd}_{endDate:yyyyMMdd}_Page{pageNum}_Size{pageSize}_{providerName}";
-
             if (_cache.TryGetValue(cacheKey, out HistoricalRatesResponse? cachedHistory) && cachedHistory != null)
                 return cachedHistory;
 
             try
             {
+                //get provider name to select the class using factory pattern
                 var provider = _exchangeRateProviderfactory.GetProvider(providerName);
                 var history = await provider.GetHistoricalExchangeRates(baseCurrency, startDate, endDate);
                 if (history?.Rates == null || !history.Rates.Any())
@@ -116,6 +122,7 @@ namespace CurrencyConverterApp.Services.Implementations
                     TotalPages = (int)Math.Ceiling(allRates.Count / (double)pageSize)
                 };
 
+                //cache the result
                 var cacheOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = _cacheDuration

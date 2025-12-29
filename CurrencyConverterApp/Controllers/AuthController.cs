@@ -22,6 +22,7 @@ namespace CurrencyConverterApp.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] LoginModel login)
         {
+            //generate JWT access token based on the login credentials
             var token = _token.GenerateJwtAccessToken(login.Username, login.Password);
             if (token == null)
                 return Unauthorized("Invalid username or password");
