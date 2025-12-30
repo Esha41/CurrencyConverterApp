@@ -27,7 +27,7 @@ CurrencyConverterApp is a .NET 8 Web API for fetching currency exchange rates, c
 - Logged all the information in a file
 - Implemented API versioning for future-proofing.
 - Ensured the API supports deployment in multiple environments (Dev, Test, Prod).
-
+- CI pipeline implemented to automate the build and test process
 
 ## **Setup Instructions**
 
@@ -86,6 +86,7 @@ Open Swagger UI in your browser:
 
 - API versioning is currently v1, but the structure supports future versions.
 
+- CI pipeline has been implemented. For deployment puprose, CD pipeline will be implemented
 
 
 
@@ -102,3 +103,5 @@ Open Swagger UI in your browser:
 - Add real-time alerts or push notifications for significant currency rate changes
 
 - Provide more advanced historical queries, including charts and trend analysis.
+
+- Implemened CD pipeline for production deployments
