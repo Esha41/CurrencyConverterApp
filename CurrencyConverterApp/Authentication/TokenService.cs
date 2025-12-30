@@ -1,4 +1,5 @@
-﻿using CurrencyConverterApp.Models;
+﻿using CurrencyConverterApp.Configurations;
+using CurrencyConverterApp.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -27,7 +28,7 @@ namespace CurrencyConverterApp.Authentication
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
-            var jwtSettings = _configuration.GetSection("Jwt").Get<JwtSettings>();
+            var jwtSettings = _configuration.GetSection("Jwt").Get<JwtConfig>();
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

@@ -1,6 +1,6 @@
+using CurrencyConverterApp.Interfaces;
 using CurrencyConverterApp.Models;
 using CurrencyConverterApp.Services.Implementations;
-using CurrencyConverterApp.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
 

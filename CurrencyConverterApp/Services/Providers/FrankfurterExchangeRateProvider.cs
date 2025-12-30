@@ -1,8 +1,8 @@
-﻿using CurrencyConverterApp.Models;
-using CurrencyConverterApp.Services.Interfaces;
+﻿using CurrencyConverterApp.Interfaces;
+using CurrencyConverterApp.Models;
 using System.Text.Json;
 
-namespace CurrencyConverterApp.Services.Implementations
+namespace CurrencyConverterApp.Services.Providers
 {
     public class FrankfurterExchangeRateProvider : IExchangeRateProvider
     {
@@ -51,8 +51,8 @@ namespace CurrencyConverterApp.Services.Implementations
             var correlationId = _httpContextAccessor.HttpContext?.Items["CorrelationId"]?.ToString();
             client.DefaultRequestHeaders.Remove("X-Correlation-Id");
             client.DefaultRequestHeaders.Add("X-Correlation-Id", correlationId);
-            _logger.LogInformation("Calling Frankfurter API | CorrelationId: {CorrelationId} | URL: {Url}", 
-             correlationId, 
+            _logger.LogInformation("Calling Frankfurter API | CorrelationId: {CorrelationId} | URL: {Url}",
+             correlationId,
              url);
 
             var response = await client.GetAsync(url);

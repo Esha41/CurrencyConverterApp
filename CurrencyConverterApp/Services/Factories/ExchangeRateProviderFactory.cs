@@ -1,9 +1,9 @@
-﻿using CurrencyConverterApp.Services.Implementations;
-using CurrencyConverterApp.Services.Interfaces;
+﻿using CurrencyConverterApp.Interfaces;
+using CurrencyConverterApp.Services.Providers;
 
-namespace CurrencyConverterApp.Services.Implementation
+namespace CurrencyConverterApp.Services.Factories
 {
-    public class ExchangeRateProviderFactory: IExchangeRateProviderFactory
+    public class ExchangeRateProviderFactory : IExchangeRateProviderFactory
     {
         private readonly IServiceProvider _serviceProvider;
 

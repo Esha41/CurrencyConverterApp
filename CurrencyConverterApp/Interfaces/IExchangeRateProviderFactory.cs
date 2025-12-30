@@ -1,4 +1,4 @@
-﻿namespace CurrencyConverterApp.Services.Interfaces
+﻿namespace CurrencyConverterApp.Interfaces
 {
     public interface IExchangeRateProviderFactory
     {

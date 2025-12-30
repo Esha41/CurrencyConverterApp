@@ -1,9 +1,10 @@
 using CurrencyConverterApp.Authentication;
 using CurrencyConverterApp.Configurations;
+using CurrencyConverterApp.Interfaces;
 using CurrencyConverterApp.Middlewares;
-using CurrencyConverterApp.Services.Implementation;
+using CurrencyConverterApp.Services.Factories;
 using CurrencyConverterApp.Services.Implementations;
-using CurrencyConverterApp.Services.Interfaces;
+using CurrencyConverterApp.Services.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -91,7 +92,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddMemoryCache();
 
 //JWT authentication configuration
-var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtConfig>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -111,7 +112,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorization();
+
 //Configure rate limiting, 10 requests per minute for each client
+builder.Services.Configure<RateLimitOptions>(
+    builder.Configuration.GetSection(RateLimitOptions.SectionName));
+
+var rateLimitOptions = builder.Configuration
+    .GetSection(RateLimitOptions.SectionName)
+    .Get<RateLimitOptions>();
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -123,10 +131,11 @@ builder.Services.AddRateLimiter(options =>
                           ?? "anonymous",
             factory: _ => new FixedWindowRateLimiterOptions
             {
-                PermitLimit = 10,         
-                Window = TimeSpan.FromMinutes(1),
-                QueueLimit = 0
-            }));
+                PermitLimit = rateLimitOptions!.PermitLimit,         
+                Window = TimeSpan.FromSeconds(rateLimitOptions.WindowInSeconds),
+                QueueLimit = rateLimitOptions.QueueLimit,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+}));
 });
 
 // configure  distributed tracing (OpenTelemetry).

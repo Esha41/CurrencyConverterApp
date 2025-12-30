@@ -1,5 +1,5 @@
 using CurrencyConverterApp.Enums;
-using CurrencyConverterApp.Services.Interfaces;
+using CurrencyConverterApp.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

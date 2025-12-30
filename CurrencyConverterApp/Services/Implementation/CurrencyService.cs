@@ -1,5 +1,5 @@
-﻿using CurrencyConverterApp.Models;
-using CurrencyConverterApp.Services.Interfaces;
+﻿using CurrencyConverterApp.Interfaces;
+using CurrencyConverterApp.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace CurrencyConverterApp.Services.Implementations
