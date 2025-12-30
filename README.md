@@ -48,13 +48,11 @@ git clone <https://github.com/Esha41/CurrencyConverterApp.git>
 
 dotnet restore
 
+
 ### **5. Run the Application**
 
 The API will be available at:
 https://localhost:5001/api/v1/currencyconverter/
-
-
-### **6. Run the Application**
 
 Open Swagger UI in your browser:
 
